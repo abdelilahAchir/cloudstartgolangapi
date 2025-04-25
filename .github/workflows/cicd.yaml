@@ -77,7 +77,7 @@ jobs:
           DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
         run: |
           # Substitute environment variables in all Kubernetes manifests
-          envsubst < k8s/mysql-deployment.yml | kubectl apply -f -
-          envsubst < k8s/mysql-service.yml | kubectl apply -f -
-          envsubst < k8s/go-app-deployment.yml | kubectl apply -f -
-          envsubst < k8s/go-app-service.yml | kubectl apply -f -
+          envsubst < k8s/mysql-deployment.yaml | kubectl apply -f -
+          envsubst < k8s/mysql-service.yaml | kubectl apply -f -
+          envsubst < k8s/go-app-deployment.yaml | kubectl apply -f -
+          envsubst < k8s/go-app-service.yaml | kubectl apply -f -
