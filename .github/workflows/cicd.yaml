@@ -53,21 +53,13 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/cloudstartgolangapi:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/cloudstartgolangapi:latest
 
-      # Deploy to Kubernetes
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@v3
-        with:
-          version: "latest"
 
-      - name: Login to Azure
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Get AKS credentials
-        run: |
-          az aks get-credentials --resource-group aks-RG --name abelskluster --overwrite-existing
-
+       # Set up kubeconfig for Linode
+      - name: Set up kubeconfig
+       run: |
+         echo "${{ secrets.LINODE_KUBECONFIG_BASE64 }}" | base64 -d > kubeconfig
+         export KUBECONFIG=$PWD/kubeconfig
+      
       - name: Deploy to Kubernetes
         env:
           DATABASE_USER: ${{ secrets.DATABASE_USER }}

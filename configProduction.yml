@@ -1,14 +1,11 @@
 # Database credentials
 database:
-  # antingen denna
   file: "" 
-  # eller alla dessa (om file är blankt)
-  sql-user: "root"            #
-  sql-pass: "Hejsan123"
-  sql-server: "mysql"
-  sql-database: "salary"
+  sql-user: "root"
+  sql-pass: "password123"
+  sql-server: "mysql" # Use localhost or 127.0.0.1 for local MySQL
+  sql-database: "SupportSystem"
   sql-port: 3306
-
 redis:
   server: "localhost:6379"
 
