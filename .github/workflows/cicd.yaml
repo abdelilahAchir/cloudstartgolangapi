@@ -21,15 +21,15 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version: 1.23.5
+          go-version: 1.20
 
       # Install dependencies
       - name: Install dependencies
         run: go mod tidy
 
       # Run tests
-    #  - name: Run tests
-    #   run: go test ./...
+      - name: Run tests
+        run: go test ./...
 
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -53,13 +53,13 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/cloudstartgolangapi:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/cloudstartgolangapi:latest
 
-
-       # Set up kubeconfig for Linode
+      # Set up kubeconfig for Linode
       - name: Set up kubeconfig
-       run: |
-         echo "${{ secrets.LINODE_KUBECONFIG_BASE64 }}" | base64 -d > kubeconfig
-         export KUBECONFIG=$PWD/kubeconfig
-      
+        run: |
+          echo "${{ secrets.LINODE_KUBECONFIG_BASE64 }}" | base64 -d > kubeconfig
+          export KUBECONFIG=$PWD/kubeconfig
+
+      # Deploy to Kubernetes
       - name: Deploy to Kubernetes
         env:
           DATABASE_USER: ${{ secrets.DATABASE_USER }}
