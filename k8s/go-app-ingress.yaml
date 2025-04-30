@@ -3,11 +3,13 @@ kind: Ingress
 metadata:
   name: go-app-ingress
   namespace: abelsspace
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    
   labels:
     app: go-app
     version: v1
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+   
 spec:
   ingressClassName: nginx
   rules:
