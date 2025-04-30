@@ -60,17 +60,20 @@ jobs:
           export KUBECONFIG=$PWD/kubeconfig
           kubectl get nodes # Test the connection to the cluster
 
+       # Replace placeholders in Kubernetes manifests
+      - name: Replace placeholders in manifests
+        run: |
+          sed -i -e "s|DATABASE_USER|${{ secrets.DATABASE_USER }}|g" \
+                 -e "s|DATABASE_PASSWORD|${{ secrets.DATABASE_PASSWORD }}|g" \
+                 -e "s|DATABASE_HOST|${{ secrets.DATABASE_HOST }}|g" \
+                 -e "s|DATABASE_PORT|${{ secrets.DATABASE_PORT }}|g" \
+                 -e "s|DATABASE_NAME|${{ secrets.DATABASE_NAME }}|g" \
+                 k8s/mysql-deployment.yaml k8s/mysql-service.yaml k8s/go-app-deployment.yaml k8s/go-app-service.yaml
+
       # Deploy to Kubernetes
       - name: Deploy to Kubernetes
-        env:
-          DATABASE_USER: ${{ secrets.DATABASE_USER }}
-          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-          DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
-          DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
-          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
         run: |
-          # Substitute environment variables in all Kubernetes manifests
-          envsubst < k8s/mysql-deployment.yaml | kubectl apply --validate=false -f -
-          envsubst < k8s/mysql-service.yaml | kubectl apply --validate=false -f -
-          envsubst < k8s/go-app-deployment.yaml | kubectl apply --validate=false -f -
-          envsubst < k8s/go-app-service.yaml | kubectl apply --validate=false -f -
+          kubectl apply -f k8s/mysql-deployment.yaml
+          kubectl apply -f k8s/mysql-service.yaml
+          kubectl apply -f k8s/go-app-deployment.yaml
+          kubectl apply -f k8s/go-app-service.yaml
