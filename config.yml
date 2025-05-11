@@ -3,7 +3,7 @@ database:
   file: "" 
   sql-user: "root"
   sql-pass: "password123"
-  sql-server: "mysql" # Use localhost or 127.0.0.1 for local MySQL
+  sql-server: "localhost" # Use localhost or 127.0.0.1 for local MySQL
   sql-database: "SupportSystem"
   sql-port: 3306
 
