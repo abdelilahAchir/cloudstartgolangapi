@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: mysql-backup
+  namespace: abelsspace
+spec:
+  schedule: "0 2 * * *" # Every day at 2 AM
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: mysql-backup
+            image: mysql:8
+            env:
+              - name: MYSQL_PWD
+                valueFrom:
+                  secretKeyRef:
+                    name: mysql-secret
+                    key: password
+            command:
+              - /bin/sh
+              - -c
+              - |
+                mysqldump -h mysql -u root SupportSystem > /backup/backup-$(date +\%F-\%H-%M-%S).sql
+            volumeMounts:
+              - name: backup-storage
+                mountPath: /backup
+          restartPolicy: OnFailure
+          volumes:
+            - name: backup-storage
+              persistentVolumeClaim:
+                claimName: mysql-backup-pvc

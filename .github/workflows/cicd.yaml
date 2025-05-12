@@ -80,3 +80,7 @@ jobs:
           envsubst < k8s/go-app-deployment.yaml | kubectl apply --validate=false -f -
           envsubst < k8s/go-app-service.yaml | kubectl apply --validate=false -f -
           envsubst < k8s/go-app-ingress.yaml | kubectl apply --validate=false -f -
+          envsubst < k8s/mysql-pvc.yaml | kubectl apply --validate=false -f -
+          envsubst > < k8s/mysql-secret.yaml | kubectl apply --validate=false -f -
+          envsubst < k8s/mysql-backup-cronjob.yaml | kubectl apply --validate=false -f -
+          envsubst < k8s/mysql-backup-pvc.yaml | kubectl apply --validate=false -f -
