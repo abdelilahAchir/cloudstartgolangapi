@@ -17,20 +17,20 @@ spec:
         app: go-app
     spec:
       containers:
-      - name: go-app
-        image: abdelilahachir/cloudstartgolangapi:latest
-        ports:
-        - containerPort: 8080
-        env:
-        - name: DATABASE_FILE
-          value: ""
-        - name: DATABASE_SERVER
-          value: "mysql"
-        - name: DATABASE_PORT
-          value: "3306"
-        - name: DATABASE_USER
-          value: "root"
-        - name: DATABASE_PASSWORD
-          value: "password123"
-        - name: DATABASE_NAME
-          value: "SupportSystem"
+        - name: go-app
+          image: abdelilahachir/cloudstartgolangapi:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DATABASE_FILE
+              value: ""
+            - name: DATABASE_SERVER
+              value: "mysql"
+            - name: DATABASE_PORT
+              value: "3306"
+            - name: DATABASE_USER
+              value: "root"
+            - name: DATABASE_PASSWORD
+              value: "password123"
+            - name: DATABASE_NAME
+              value: "SupportSystem"
