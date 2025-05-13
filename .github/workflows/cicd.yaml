@@ -75,6 +75,7 @@ jobs:
         run: |
           export KUBECONFIG=$PWD/kubeconfig
           # Substitute environment variables in all Kubernetes manifests
+          envsubst < k8s/namespace.yaml | kubectl apply --validate=false -f -
           envsubst < k8s/mysql-deployment.yaml | kubectl apply --validate=false -f -
           envsubst < k8s/mysql-service.yaml | kubectl apply --validate=false -f -
           envsubst < k8s/go-app-deployment.yaml | kubectl apply --validate=false -f -
