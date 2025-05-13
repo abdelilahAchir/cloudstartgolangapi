@@ -78,7 +78,7 @@ jobs:
           kubectl apply -f k8s/mysql-pvc.yaml
           kubectl apply -f k8s/mysql-backup-pvc.yaml
           kubectl apply -f k8s/mysql-secret.yaml
-          kubectl apply -f k8s/BackblazeS3Credentials.yaml
+          kubectl apply -f k8s/BackblazeS3credentials.yaml
           kubectl apply -f k8s/mysql-deployment.yaml
           kubectl apply -f k8s/mysql-service.yaml
           kubectl apply -f k8s/go-app-deployment.yaml
