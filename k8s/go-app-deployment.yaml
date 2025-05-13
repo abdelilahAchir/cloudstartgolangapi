@@ -23,7 +23,7 @@ spec:
         - containerPort: 8080
         env:
         - name: DATABASE_FILE
-          value: ""
+          value: "0"
         - name: DATABASE_SERVER
           value: "mysql"
         - name: DATABASE_PORT

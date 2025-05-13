@@ -73,15 +73,15 @@ jobs:
       # Deploy to Kubernetes
       - name: Deploy to Kubernetes
         run: |
-         export KUBECONFIG=$PWD/kubeconfig
-          kubectl apply -f k8s/namespace.yaml
-          kubectl apply -f k8s/mysql-pvc.yaml
-          kubectl apply -f k8s/mysql-backup-pvc.yaml
-          kubectl apply -f k8s/mysql-secret.yaml
-          kubectl apply -f k8s/BackblazeS3credentials.yaml
-          kubectl apply -f k8s/mysql-deployment.yaml
-          kubectl apply -f k8s/mysql-service.yaml
-          kubectl apply -f k8s/go-app-deployment.yaml
-          kubectl apply -f k8s/go-app-service.yaml
-          kubectl apply -f k8s/go-app-ingress.yaml
-          kubectl apply -f k8s/mysql-backup-cronjob.yaml
+          export KUBECONFIG=$PWD/kubeconfig
+           kubectl apply -f k8s/namespace.yaml
+           kubectl apply -f k8s/mysql-pvc.yaml
+           kubectl apply -f k8s/mysql-backup-pvc.yaml
+           kubectl apply -f k8s/mysql-secret.yaml
+           kubectl apply -f k8s/BackblazeS3credentials.yaml
+           kubectl apply -f k8s/mysql-deployment.yaml
+           kubectl apply -f k8s/mysql-service.yaml
+           kubectl apply -f k8s/go-app-service.yaml
+           kubectl apply -f k8s/go-app-ingress.yaml
+           kubectl apply -f k8s/mysql-backup-cronjob.yaml
+           kubectl apply -f k8s/go-app-deployment.yaml
