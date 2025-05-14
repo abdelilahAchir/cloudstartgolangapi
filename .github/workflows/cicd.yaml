@@ -52,7 +52,7 @@ jobs:
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/cloudstartgolangapi:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/cloudstartgolangapi:latest
-          docker build -f .\Dockerfile.mysql-backup -t ${{ secrets.DOCKER_USERNAME }}/mysql-backup-awscli:latest .
+          docker build -f ./Dockerfile.mysql-backup -t ${{ secrets.DOCKER_USERNAME }}/mysql-backup-awscli:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/mysql-backup-awscli:latest
 
       # Set up kubeconfig for Linode
