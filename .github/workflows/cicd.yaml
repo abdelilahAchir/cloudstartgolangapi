@@ -52,6 +52,8 @@ jobs:
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/cloudstartgolangapi:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/cloudstartgolangapi:latest
+          docker build -f .\Dockerfile.mysql-backup -t ${{ secrets.DOCKER_USERNAME }}/mysql-backup-awscli:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/mysql-backup-awscli:latest
 
       # Set up kubeconfig for Linode
       - name: Set up kubeconfig
@@ -72,6 +74,12 @@ jobs:
 
       # Deploy to Kubernetes
       - name: Deploy to Kubernetes
+        env:
+          DATABASE_USER: ${{ secrets.DATABASE_USER }}
+          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+          DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
+          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
         run: |
           export KUBECONFIG=$PWD/kubeconfig
            kubectl apply -f k8s/namespace.yaml
