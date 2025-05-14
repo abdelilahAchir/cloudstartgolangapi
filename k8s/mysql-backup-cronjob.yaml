@@ -11,7 +11,7 @@ spec:
         spec:
           containers:
           - name: mysql-backup
-            image: amazonlinux:2
+            image: abdelilahachir/mysql-backup-awscli:latest
             env:
               - name: MYSQL_PWD
                 valueFrom:
@@ -23,23 +23,25 @@ spec:
                   secretKeyRef:
                     name: b2-s3-secret
                     key: accessKeyId
+              - name: AWS_DISABLE_SDK_CHECKSUM
+                value: "1"
               - name: AWS_SECRET_ACCESS_KEY
                 valueFrom:
                   secretKeyRef:
                     name: b2-s3-secret
                     key: secretAccessKey
               - name: B2_BUCKET
-                value: AbdelilahBucket2
+                value: AbdelilahBucket
               - name: B2_ENDPOINT
-                value: htpps://s3.eu-central-003.backblazeb2.com
+                value: https://s3.eu-central-003.backblazeb2.com  
             command:
               - /bin/sh
               - -c
               - |
-                yum install -y mysql awscli
                 export BACKUP_FILE=/backup/backup-$(date +%F-%H-%M-%S).sql
                 mysqldump -h mysql -u root SupportSystem > $BACKUP_FILE
-                aws --endpoint-url $B2_ENDPOINT s3 cp $BACKUP_FILE s3://$B2_BUCKET/
+                aws s3 cp $BACKUP_FILE s3://AbdelilahBucket/backup.sql --endpoint-url https://s3.eu-central-003.backblazeb2.com
+                rm $BACKUP_FILE
             volumeMounts:
               - name: backup-storage
                 mountPath: /backup
